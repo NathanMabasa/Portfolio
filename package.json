@@ -9,7 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@21st-sdk/agent": "^0.0.14",
+    "@21st-sdk/nextjs": "^0.0.10",
+    "@21st-sdk/react": "^0.2.3",
+    "@ai-sdk/react": "^3.0.142",
     "@gsap/react": "^2.1.2",
+    "ai": "^6.0.140",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.0",
     "gsap": "^3.14.2",

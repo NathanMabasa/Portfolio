@@ -20,7 +20,6 @@ export default function About() {
   useGSAP(() => {
     if (!sectionRef.current) return
 
-    // All .reveal-inner elements animate up with stagger
     const lines = sectionRef.current.querySelectorAll<HTMLElement>('.reveal-inner')
     gsap.fromTo(lines,
       { yPercent: 105, opacity: 0 },
@@ -31,7 +30,6 @@ export default function About() {
       }
     )
 
-    // Stats count-up
     const statEls = sectionRef.current.querySelectorAll<HTMLElement>('.stat-value')
     statEls.forEach((el) => {
       const target = parseFloat(el.dataset.target ?? '0')
@@ -50,7 +48,7 @@ export default function About() {
   }, { scope: sectionRef })
 
   return (
-    <section id="about" ref={sectionRef} className="section bg-black">
+    <section id="about" ref={sectionRef} className="section bg-[#fafafa]">
       <div className="max-w-[1400px] mx-auto">
         <div className="section-label">01 — About</div>
 
@@ -58,10 +56,10 @@ export default function About() {
           {/* Left — text */}
           <div>
             <div className="overflow-hidden mb-8">
-              <h2 className="reveal-inner text-4xl md:text-5xl font-display font-extralight text-white tracking-[-0.03em] leading-[1.1]">
+              <h2 className="reveal-inner text-4xl md:text-5xl font-display font-extralight text-black tracking-[-0.03em] leading-[1.1]">
                 The person behind
                 <br />
-                <em className="not-italic text-[#555]">the screen.</em>
+                <em className="not-italic text-[#aaa]">the screen.</em>
               </h2>
             </div>
 
@@ -73,15 +71,15 @@ export default function About() {
             </div>
 
             <div className="overflow-hidden mb-8">
-              <blockquote className="reveal-inner border-l-2 border-accent pl-5">
-                <p className="text-lg font-display font-light text-white leading-snug italic">
+              <blockquote className="reveal-inner border-l-2 border-black pl-5">
+                <p className="text-lg font-display font-light text-black leading-snug italic">
                   &ldquo;Great design isn&apos;t just visual — it&apos;s a system of decisions.&rdquo;
                 </p>
               </blockquote>
             </div>
 
             <div className="overflow-hidden mb-6">
-              <p className="reveal-inner text-sm text-[#555] leading-relaxed">
+              <p className="reveal-inner text-sm text-[#777] leading-relaxed">
                 I specialise in brand identity, UI/UX, motion design, creative development,
                 and design systems. I work with founders and global brands to turn complex
                 challenges into beautiful, functional digital experiences.
@@ -89,7 +87,7 @@ export default function About() {
             </div>
 
             <div className="overflow-hidden">
-              <p className="reveal-inner text-[11px] font-mono text-[#333] uppercase tracking-[0.2em]">
+              <p className="reveal-inner text-[11px] font-mono text-[#aaa] uppercase tracking-[0.2em]">
                 Based in South Africa · Open to international work
               </p>
             </div>
@@ -97,23 +95,21 @@ export default function About() {
 
           {/* Right — stats + tags */}
           <div>
-            {/* Stats grid */}
-            <div className="grid grid-cols-2 gap-px bg-[#111] rounded-none mb-8">
+            <div className="grid grid-cols-2 gap-px bg-[#e5e5e5] mb-8">
               {STATS.map((s) => (
-                <div key={s.label} className="bg-black p-8 border border-[#111]">
+                <div key={s.label} className="bg-white p-8">
                   <div
-                    className="stat-value text-4xl md:text-5xl font-display font-extralight text-accent mb-2 tabular-nums"
+                    className="stat-value text-4xl md:text-5xl font-display font-extralight text-black mb-2 tabular-nums"
                     data-target={parseFloat(s.value)}
                     data-suffix={s.value.includes('+') ? '+' : ''}
                   >
                     {s.value}
                   </div>
-                  <div className="text-xs text-[#444] font-sans tracking-wide">{s.label}</div>
+                  <div className="text-xs text-[#aaa] font-sans tracking-wide">{s.label}</div>
                 </div>
               ))}
             </div>
 
-            {/* Tags */}
             <div className="flex flex-wrap gap-2">
               {[
                 'Brand Identity', 'UI / UX', 'Motion Design',
@@ -121,7 +117,7 @@ export default function About() {
               ].map((tag) => (
                 <span
                   key={tag}
-                  className="px-3.5 py-1.5 border border-[#1a1a1a] text-xs text-[#444] hover:border-accent/40 hover:text-[#999] transition-all duration-300"
+                  className="px-3.5 py-1.5 border border-[#e5e5e5] text-xs text-[#888] hover:border-black hover:text-black transition-all duration-300"
                 >
                   {tag}
                 </span>

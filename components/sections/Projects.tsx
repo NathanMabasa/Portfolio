@@ -37,7 +37,6 @@ export default function Projects() {
   const rowRefs    = useRef<(HTMLLIElement | null)[]>([])
   const [hoveredRow, setHoveredRow] = useState<number | null>(null)
 
-  // ── Scroll-reveal: stagger rows in ─────────────────
   useGSAP(() => {
     if (!sectionRef.current) return
 
@@ -60,7 +59,6 @@ export default function Projects() {
       )
     })
 
-    // Section heading reveal
     const inner = sectionRef.current.querySelectorAll<HTMLElement>('.reveal-inner')
     gsap.fromTo(inner,
       { yPercent: 105, opacity: 0 },
@@ -72,50 +70,26 @@ export default function Projects() {
     )
   }, { scope: sectionRef })
 
-  // ── Parallax scale on each row ──────────────────────
-  useGSAP(() => {
-    rowRefs.current.forEach((row) => {
-      if (!row) return
-      gsap.fromTo(
-        row,
-        { backgroundSize: '110%' },
-        {
-          backgroundSize: '100%',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: row,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5,
-          },
-        }
-      )
-    })
-  }, { scope: sectionRef })
-
   return (
-    <section ref={sectionRef} id="work" className="section bg-black">
-      {/* Floating project cursor */}
+    <section ref={sectionRef} id="work" className="section bg-white">
       <ProjectCursor label="View" visible={hoveredRow !== null} />
 
       <div className="max-w-[1400px] mx-auto">
-        {/* Header */}
         <div className="section-label">02 — Work</div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <div className="overflow-hidden">
-            <h2 className="reveal-inner inline-block text-4xl md:text-5xl lg:text-6xl font-display font-extralight text-white tracking-[-0.03em] leading-[1.05]">
+            <h2 className="reveal-inner inline-block text-4xl md:text-5xl lg:text-6xl font-display font-extralight text-black tracking-[-0.03em] leading-[1.05]">
               Selected Projects
             </h2>
           </div>
           <div className="overflow-hidden">
-            <p className="reveal-inner inline-block text-sm text-[#555] max-w-xs leading-relaxed">
+            <p className="reveal-inner inline-block text-sm text-[#888] max-w-xs leading-relaxed">
               Brand, UI/UX, and creative development for studios and founders worldwide.
             </p>
           </div>
         </div>
 
-        {/* Project list */}
         <ul>
           {PROJECTS.map((p, i) => (
             <li
@@ -125,43 +99,39 @@ export default function Projects() {
               onMouseLeave={() => setHoveredRow(null)}
               className="group opacity-0"
             >
-              {/* Top rule */}
               <div className="hr" />
 
               <div className="py-7 md:py-9 grid grid-cols-[40px_1fr] md:grid-cols-[64px_1fr_auto] gap-x-6 md:gap-x-10 items-center">
-                {/* Number */}
                 <span
-                  className="font-display font-extralight text-[#222] group-hover:text-white transition-colors duration-500 leading-none"
+                  className="font-display font-extralight text-[#ccc] group-hover:text-black transition-colors duration-500 leading-none"
                   style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
                 >
                   {p.number}
                 </span>
 
-                {/* Title + tags */}
                 <div>
                   <h3
-                    className="font-display font-light text-white group-hover:text-accent transition-colors duration-300 leading-tight mb-2"
+                    className="font-display font-light text-black group-hover:text-[#555] transition-colors duration-300 leading-tight mb-2"
                     style={{ fontSize: 'clamp(1.4rem, 4.5vw, 3.5rem)', letterSpacing: '-0.02em' }}
                   >
                     {p.title}
                   </h3>
                   <div className="flex flex-wrap items-center gap-4">
-                    <span className="text-[11px] text-[#444] font-mono uppercase tracking-[0.15em]">
+                    <span className="text-[11px] text-[#888] font-mono uppercase tracking-[0.15em]">
                       {p.category}
                     </span>
-                    <span className="text-[#2a2a2a]">·</span>
+                    <span className="text-[#ccc]">·</span>
                     {p.tags.map((tag) => (
-                      <span key={tag} className="text-[11px] text-[#333] font-sans">
+                      <span key={tag} className="text-[11px] text-[#aaa] font-sans">
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* Year + arrow */}
                 <div className="hidden md:flex items-center gap-6">
-                  <span className="text-[11px] font-mono text-[#333]">{p.year}</span>
-                  <span className="text-2xl text-[#222] group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 inline-block">
+                  <span className="text-[11px] font-mono text-[#aaa]">{p.year}</span>
+                  <span className="text-2xl text-[#ccc] group-hover:text-black group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300 inline-block">
                     ↗
                   </span>
                 </div>
@@ -169,14 +139,12 @@ export default function Projects() {
             </li>
           ))}
 
-          {/* Final rule */}
           <li><div className="hr" /></li>
         </ul>
 
-        {/* More work CTA */}
-        <p className="mt-10 text-sm text-[#444] text-center">
+        <p className="mt-10 text-sm text-[#888] text-center">
           More projects available on request —{' '}
-          <a href="mailto:hello@nathanmabasa.com" className="text-accent hover:underline">
+          <a href="mailto:hello@nathanmabasa.com" className="text-black hover:text-[#888] transition-colors duration-200">
             get in touch
           </a>
         </p>

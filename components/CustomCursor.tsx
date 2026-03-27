@@ -81,7 +81,7 @@ export default function CustomCursor() {
       {/* Ring — lagging */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 z-[9997] pointer-events-none w-8 h-8 border border-white/30 rounded-full"
+        className="fixed top-0 left-0 z-[9997] pointer-events-none w-8 h-8 border border-black/25 rounded-full"
         style={{ transform: 'translate(-50%, -50%)', opacity: 0 }}
         aria-hidden="true"
       />

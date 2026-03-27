@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import Preloader from '@/components/Preloader'
+import HeroPreloader from '@/components/HeroPreloader'
 import LenisProvider from '@/components/LenisProvider'
-import Hero from '@/components/sections/Hero'
 import Skills from '@/components/sections/Skills'
-import About from '@/components/sections/About'
 import Projects from '@/components/sections/Projects'
+import About from '@/components/sections/About'
 import Services from '@/components/sections/Services'
 import Contact from '@/components/sections/Contact'
+import Collaborate from '@/components/sections/Collaborate'
 import Footer from '@/components/sections/Footer'
 
 export default function Home() {
@@ -16,24 +16,26 @@ export default function Home() {
 
   return (
     <>
-      {/* Preloader sits above everything */}
-      <Preloader onComplete={() => setReady(true)} />
+      {/* HeroPreloader IS the hero — it handles the full transition internally */}
+      <HeroPreloader onDone={() => setReady(true)} />
 
-      {/* Page revealed underneath the preloader shutters */}
+      {/* All other sections are hidden during preload, revealed after */}
       <LenisProvider>
-        <main
-          className="transition-none"
+        <div
           aria-hidden={!ready}
-          style={{ visibility: ready ? 'visible' : 'hidden' }}
+          style={{
+            visibility: ready ? 'visible' : 'hidden',
+            // Keep in DOM so GSAP ScrollTrigger can measure heights
+          }}
         >
-          <Hero isReady={ready} />
           <Skills />
-          <About />
           <Projects />
+          <About />
           <Services />
+          <Collaborate />
           <Contact />
           <Footer />
-        </main>
+        </div>
       </LenisProvider>
     </>
   )

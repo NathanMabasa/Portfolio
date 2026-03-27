@@ -12,9 +12,9 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
 const SOCIALS = [
-  { label: 'LinkedIn',   href: 'https://linkedin.com/in/nyikonathan-mabasa/', handle: '@nyikonathan-mabasa' },
-  { label: 'Instagram',  href: 'https://instagram.com/nathanmabasa',          handle: '@nathanmabasa' },
-  { label: 'Twitter / X',href: 'https://twitter.com/nathanmabasa',            handle: '@nathanmabasa' },
+  { label: 'LinkedIn',    href: 'https://linkedin.com/in/nyikonathan-mabasa/', handle: '@nyikonathan-mabasa' },
+  { label: 'Instagram',   href: 'https://instagram.com/nathanmabasa',          handle: '@nathanmabasa' },
+  { label: 'Twitter / X', href: 'https://twitter.com/nathanmabasa',            handle: '@nathanmabasa' },
 ]
 
 export default function Contact() {
@@ -67,10 +67,10 @@ export default function Contact() {
     }
   }
 
-  const fieldCls = 'w-full bg-transparent border-b border-[#1a1a1a] py-4 text-sm text-white placeholder-[#333] focus:outline-none focus:border-[#555] hover:border-[#2a2a2a] transition-colors duration-200'
+  const fieldCls = 'w-full bg-transparent border-b border-[#e5e5e5] py-4 text-sm text-black placeholder-[#ccc] focus:outline-none focus:border-black hover:border-[#aaa] transition-colors duration-200'
 
   return (
-    <section id="contact" ref={sectionRef} className="section bg-black">
+    <section id="contact" ref={sectionRef} className="section bg-[#fafafa]">
       <div className="max-w-[1400px] mx-auto">
         <div className="section-label">04 — Contact</div>
 
@@ -78,15 +78,15 @@ export default function Contact() {
           {/* Left */}
           <div>
             <div className="overflow-hidden mb-8">
-              <h2 className="reveal-inner text-4xl md:text-5xl lg:text-6xl font-display font-extralight text-white tracking-[-0.03em] leading-[1.05]">
+              <h2 className="reveal-inner text-4xl md:text-5xl lg:text-6xl font-display font-extralight text-black tracking-[-0.03em] leading-[1.05]">
                 Let&apos;s work
                 <br />
-                <em className="not-italic text-[#555]">together.</em>
+                <em className="not-italic text-[#aaa]">together.</em>
               </h2>
             </div>
 
             <div className="overflow-hidden mb-10">
-              <p className="reveal-inner text-sm text-[#555] leading-relaxed max-w-sm">
+              <p className="reveal-inner text-sm text-[#777] leading-relaxed max-w-sm">
                 Have a project in mind? I&apos;m always open to new challenges — brand identities,
                 website redesigns, or long-term creative partnerships.
               </p>
@@ -94,7 +94,7 @@ export default function Contact() {
 
             <div className="overflow-hidden mb-10">
               <a
-                className="reveal-inner inline-block text-2xl md:text-3xl font-display font-extralight text-white hover:text-accent transition-colors duration-300 link-underline"
+                className="reveal-inner inline-block text-2xl md:text-3xl font-display font-extralight text-black hover:text-[#555] transition-colors duration-300 link-underline"
                 href="mailto:hello@nathanmabasa.com"
               >
                 hello@nathanmabasa.com
@@ -102,7 +102,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <p className="text-[11px] font-mono text-[#333] uppercase tracking-[0.2em] mb-5">Online</p>
+              <p className="text-[11px] font-mono text-[#aaa] uppercase tracking-[0.2em] mb-5">Online</p>
               <div className="space-y-0">
                 {SOCIALS.map((s) => (
                   <a
@@ -110,10 +110,10 @@ export default function Contact() {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between border-b border-[#111] py-3.5 group hover:border-[#222] transition-colors duration-300"
+                    className="flex items-center justify-between border-b border-[#e5e5e5] py-3.5 group hover:border-[#aaa] transition-colors duration-300"
                   >
-                    <span className="text-sm text-[#555] group-hover:text-white transition-colors">{s.label}</span>
-                    <span className="text-xs font-mono text-[#333] group-hover:text-accent transition-colors">{s.handle} ↗</span>
+                    <span className="text-sm text-[#888] group-hover:text-black transition-colors">{s.label}</span>
+                    <span className="text-xs font-mono text-[#aaa] group-hover:text-black transition-colors">{s.handle} ↗</span>
                   </a>
                 ))}
               </div>
@@ -123,13 +123,13 @@ export default function Contact() {
           {/* Right — Form */}
           <div>
             {status === 'success' ? (
-              <div className="flex flex-col items-center justify-center h-full text-center py-20 border border-accent/20">
-                <div className="text-3xl text-accent mb-4">✓</div>
-                <h3 className="text-xl font-display font-light text-white mb-2">Message sent</h3>
-                <p className="text-sm text-[#555] max-w-xs mb-6">
+              <div className="flex flex-col items-center justify-center h-full text-center py-20 border border-[#e5e5e5]">
+                <div className="text-3xl text-black mb-4">✓</div>
+                <h3 className="text-xl font-display font-light text-black mb-2">Message sent</h3>
+                <p className="text-sm text-[#777] max-w-xs mb-6">
                   Thanks for reaching out. I&apos;ll respond within 1–2 business days.
                 </p>
-                <button onClick={() => setStatus('idle')} className="text-xs text-[#444] hover:text-accent transition-colors">
+                <button onClick={() => setStatus('idle')} className="text-xs text-[#aaa] hover:text-black transition-colors">
                   Send another →
                 </button>
               </div>
@@ -138,12 +138,12 @@ export default function Contact() {
                 <div>
                   <input id="name" name="name" type="text" required autoComplete="name"
                     placeholder="Your name *" className={fieldCls} />
-                  {fieldErrors.name && <p className="pt-1 text-xs text-red-400">{fieldErrors.name[0]}</p>}
+                  {fieldErrors.name && <p className="pt-1 text-xs text-red-500">{fieldErrors.name[0]}</p>}
                 </div>
                 <div>
                   <input id="email" name="email" type="email" required autoComplete="email"
                     placeholder="Email address *" className={fieldCls} />
-                  {fieldErrors.email && <p className="pt-1 text-xs text-red-400">{fieldErrors.email[0]}</p>}
+                  {fieldErrors.email && <p className="pt-1 text-xs text-red-500">{fieldErrors.email[0]}</p>}
                 </div>
                 <div>
                   <input id="subject" name="subject" type="text" autoComplete="off"
@@ -153,21 +153,21 @@ export default function Contact() {
                   <textarea id="message" name="message" required rows={5}
                     placeholder="Tell me about your project... *"
                     className={`${fieldCls} resize-none`} />
-                  {fieldErrors.message && <p className="pt-1 text-xs text-red-400">{fieldErrors.message[0]}</p>}
+                  {fieldErrors.message && <p className="pt-1 text-xs text-red-500">{fieldErrors.message[0]}</p>}
                 </div>
 
                 {status === 'error' && (
-                  <p className="text-xs text-red-400 pt-2" role="alert">{errorMsg}</p>
+                  <p className="text-xs text-red-500 pt-2" role="alert">{errorMsg}</p>
                 )}
 
                 <div className="pt-8">
                   <button
                     type="submit"
                     disabled={status === 'loading'}
-                    className="flex items-center gap-3 text-sm font-display font-medium text-black bg-accent px-8 py-4 hover:bg-white disabled:opacity-50 transition-all duration-200"
+                    className="flex items-center gap-3 text-sm font-display font-medium text-white bg-black px-8 py-4 hover:bg-[#333] disabled:opacity-50 transition-all duration-200"
                   >
                     {status === 'loading' ? (
-                      <><span className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />Sending...</>
+                      <><span className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />Sending...</>
                     ) : (
                       <>Send Message <ArrowRight className="w-4 h-4" /></>
                     )}
