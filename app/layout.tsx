@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Inter_Tight } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 import GrainOverlay from '@/components/GrainOverlay'
 
-const montserrat = Montserrat({
+const interTight = Inter_Tight({
   subsets: ['latin'],
-  variable: '--font-montserrat',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-inter-tight',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   display: 'swap',
 })
 
@@ -22,8 +22,7 @@ const personJsonLd = {
     'https://twitter.com/nathanmabasa',
   ],
   jobTitle: 'Digital Designer & Creative Developer',
-  description:
-    'South African digital designer and creative developer specializing in immersive web experiences, brand identity, and UI/UX design.',
+  description: 'South African digital designer and creative developer specializing in immersive web experiences, brand identity, and UI/UX design.',
   address: { '@type': 'PostalAddress', addressCountry: 'ZA' },
   email: 'hello@nathanmabasa.com',
 }
@@ -33,11 +32,10 @@ export const metadata: Metadata = {
     default: 'Nathan Mabasa — Digital Designer & Creative Developer',
     template: '%s | Nathan Mabasa',
   },
-  description:
-    'South African digital designer and creative developer. Brand identity, UI/UX, and creative development for founders and studios worldwide.',
+  description: 'South African digital designer and creative developer. Brand identity, UI/UX, and creative development for founders and studios worldwide.',
   keywords: ['Nathan Mabasa', 'digital designer', 'creative developer', 'UI UX South Africa', 'brand identity', 'web design'],
-  authors:    [{ name: 'Nathan Mabasa', url: 'https://nathanmabasa.com' }],
-  creator:    'Nathan Mabasa',
+  authors: [{ name: 'Nathan Mabasa', url: 'https://nathanmabasa.com' }],
+  creator: 'Nathan Mabasa',
   metadataBase: new URL('https://nathanmabasa.com'),
   alternates: { canonical: '/' },
   openGraph: {
@@ -62,7 +60,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={montserrat.variable}>
+    <html lang="en" className={interTight.variable}>
       <head>
         <script
           type="application/ld+json"
@@ -70,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="bg-white text-black font-sans antialiased">
+      <body className="bg-[#0d0d0d] text-white font-sans antialiased">
         <GrainOverlay />
         <CustomCursor />
         {children}

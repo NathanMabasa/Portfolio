@@ -9,22 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans:    ['var(--font-montserrat)', 'sans-serif'],
-        display: ['var(--font-montserrat)', 'sans-serif'],
-        body:    ['var(--font-montserrat)', 'sans-serif'],
+        sans:    ['var(--font-inter-tight)', 'sans-serif'],
+        display: ['var(--font-inter-tight)', 'sans-serif'],
+        body:    ['var(--font-inter-tight)', 'sans-serif'],
         mono:    ['ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       colors: {
-        /* Light palette */
-        bg:       '#ffffff',
-        surface:  '#fafafa',
-        surface2: '#f5f5f5',
-        border:   '#e5e5e5',
-        fg:       '#000000',
-        'fg-2':   '#888888',
-        'fg-3':   '#cccccc',
-        accent:   '#000000',        // black as primary accent on white
-        lime:     '#CAFF33',        // kept for micro-accents only
+        bg:       '#0d0d0d',
+        surface:  '#111111',
+        surface2: '#161616',
+        border:   '#222222',
+        fg:       '#ffffff',
+        'fg-2':   '#777777',
+        'fg-3':   '#333333',
+        accent:   '#caff33',
+        lime:     '#caff33',
       },
       animation: {
         marquee:          'marquee 32s linear infinite',

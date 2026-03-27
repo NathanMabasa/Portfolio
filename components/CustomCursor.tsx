@@ -10,7 +10,6 @@ export default function CustomCursor() {
   const ringPos = useRef({ x: -100, y: -100 })
 
   useEffect(() => {
-    // Hide on touch devices
     if (window.matchMedia('(pointer: coarse)').matches) return
 
     const dot  = dotRef.current
@@ -22,7 +21,6 @@ export default function CustomCursor() {
       gsap.set(dot, { x: e.clientX, y: e.clientY })
     }
 
-    // Smooth ring follow via GSAP ticker (lerp)
     const ticker = () => {
       ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.12
       ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.12
@@ -35,7 +33,7 @@ export default function CustomCursor() {
       )
       gsap.to(ring, {
         scale: interactive ? 1.8 : 1,
-        opacity: interactive ? 0.8 : 0.4,
+        opacity: interactive ? 0.9 : 0.4,
         duration: 0.3,
         ease: 'power2.out',
       })
@@ -51,7 +49,6 @@ export default function CustomCursor() {
     document.addEventListener('mouseup', onUp)
     gsap.ticker.add(ticker)
 
-    // Fade in cursors on first move
     gsap.set([dot, ring], { opacity: 0 })
     const showCursors = () => {
       gsap.to([dot, ring], { opacity: 1, duration: 0.3 })
@@ -71,17 +68,15 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Dot — instant */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 z-[9998] pointer-events-none w-2 h-2 bg-accent rounded-full"
         style={{ transform: 'translate(-50%, -50%)', opacity: 0 }}
         aria-hidden="true"
       />
-      {/* Ring — lagging */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 z-[9997] pointer-events-none w-8 h-8 border border-black/25 rounded-full"
+        className="fixed top-0 left-0 z-[9997] pointer-events-none w-8 h-8 border border-white/20 rounded-full"
         style={{ transform: 'translate(-50%, -50%)', opacity: 0 }}
         aria-hidden="true"
       />
