@@ -1,102 +1,89 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'framer-motion'
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
 
 export default function CustomCursor() {
-  const [hovering, setHovering] = useState(false)
-  const [clicking, setClicking] = useState(false)
-  const [visible, setVisible] = useState(false)
-
-  const rawX = useMotionValue(-200)
-  const rawY = useMotionValue(-200)
-
-  // Dot follows instantly
-  const dotX = useSpring(rawX, { stiffness: 1000, damping: 50 })
-  const dotY = useSpring(rawY, { stiffness: 1000, damping: 50 })
-
-  // Ring follows with smooth lag
-  const ringX = useSpring(rawX, { stiffness: 150, damping: 20 })
-  const ringY = useSpring(rawY, { stiffness: 150, damping: 20 })
+  const dotRef  = useRef<HTMLDivElement>(null)
+  const ringRef = useRef<HTMLDivElement>(null)
+  const pos     = useRef({ x: -100, y: -100 })
+  const ringPos = useRef({ x: -100, y: -100 })
 
   useEffect(() => {
     // Hide on touch devices
     if (window.matchMedia('(pointer: coarse)').matches) return
 
+    const dot  = dotRef.current
+    const ring = ringRef.current
+    if (!dot || !ring) return
+
     const onMove = (e: MouseEvent) => {
-      rawX.set(e.clientX)
-      rawY.set(e.clientY)
-      if (!visible) setVisible(true)
+      pos.current = { x: e.clientX, y: e.clientY }
+      gsap.set(dot, { x: e.clientX, y: e.clientY })
+    }
+
+    // Smooth ring follow via GSAP ticker (lerp)
+    const ticker = () => {
+      ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.12
+      ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.12
+      gsap.set(ring, { x: ringPos.current.x, y: ringPos.current.y })
     }
 
     const onOver = (e: MouseEvent) => {
-      const el = (e.target as HTMLElement).closest(
-        'a, button, [data-cursor="hover"], input, textarea, select, label'
+      const interactive = (e.target as HTMLElement).closest(
+        'a, button, [data-cursor="hover"], input, textarea, select'
       )
-      setHovering(!!el)
+      gsap.to(ring, {
+        scale: interactive ? 1.8 : 1,
+        opacity: interactive ? 0.8 : 0.4,
+        duration: 0.3,
+        ease: 'power2.out',
+      })
+      gsap.to(dot, { scale: interactive ? 0.4 : 1, duration: 0.2 })
     }
 
-    const onDown = () => setClicking(true)
-    const onUp = () => setClicking(false)
-    const onLeave = () => setVisible(false)
-    const onEnter = () => setVisible(true)
+    const onDown = () => gsap.to(ring, { scale: 0.7, duration: 0.15 })
+    const onUp   = () => gsap.to(ring, { scale: 1,   duration: 0.25 })
 
     window.addEventListener('mousemove', onMove)
     document.addEventListener('mouseover', onOver)
     document.addEventListener('mousedown', onDown)
     document.addEventListener('mouseup', onUp)
-    document.addEventListener('mouseleave', onLeave)
-    document.addEventListener('mouseenter', onEnter)
+    gsap.ticker.add(ticker)
+
+    // Fade in cursors on first move
+    gsap.set([dot, ring], { opacity: 0 })
+    const showCursors = () => {
+      gsap.to([dot, ring], { opacity: 1, duration: 0.3 })
+      window.removeEventListener('mousemove', showCursors)
+    }
+    window.addEventListener('mousemove', showCursors)
 
     return () => {
       window.removeEventListener('mousemove', onMove)
+      window.removeEventListener('mousemove', showCursors)
       document.removeEventListener('mouseover', onOver)
       document.removeEventListener('mousedown', onDown)
       document.removeEventListener('mouseup', onUp)
-      document.removeEventListener('mouseleave', onLeave)
-      document.removeEventListener('mouseenter', onEnter)
+      gsap.ticker.remove(ticker)
     }
-  }, [rawX, rawY, visible])
-
-  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) {
-    return null
-  }
+  }, [])
 
   return (
     <>
-      {/* Inner dot */}
-      <motion.div
-        className="fixed top-0 left-0 z-[9999] pointer-events-none rounded-full bg-accent mix-blend-difference"
-        style={{
-          x: dotX,
-          y: dotY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{
-          width: clicking ? 6 : hovering ? 8 : 8,
-          height: clicking ? 6 : hovering ? 8 : 8,
-          opacity: visible ? 1 : 0,
-        }}
-        transition={{ duration: 0.15 }}
+      {/* Dot — instant */}
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 z-[9998] pointer-events-none w-2 h-2 bg-accent rounded-full"
+        style={{ transform: 'translate(-50%, -50%)', opacity: 0 }}
+        aria-hidden="true"
       />
-
-      {/* Outer ring */}
-      <motion.div
-        className="fixed top-0 left-0 z-[9998] pointer-events-none rounded-full border border-accent/60"
-        style={{
-          x: ringX,
-          y: ringY,
-          translateX: '-50%',
-          translateY: '-50%',
-        }}
-        animate={{
-          width: hovering ? 52 : clicking ? 24 : 36,
-          height: hovering ? 52 : clicking ? 24 : 36,
-          opacity: visible ? hovering ? 0.9 : 0.5 : 0,
-          backgroundColor: hovering ? 'rgba(202,255,51,0.08)' : 'transparent',
-        }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
+      {/* Ring — lagging */}
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 z-[9997] pointer-events-none w-8 h-8 border border-white/30 rounded-full"
+        style={{ transform: 'translate(-50%, -50%)', opacity: 0 }}
+        aria-hidden="true"
       />
     </>
   )

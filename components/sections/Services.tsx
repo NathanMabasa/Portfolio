@@ -1,105 +1,94 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
 
-const services = [
-  {
-    n: '01',
-    title: 'Brand Identity & Strategy',
-    desc: 'From positioning to logos, colour systems, and guidelines — brands that resonate and endure. Strategy-first, aesthetics-always.',
-    features: ['Logo & Visual Identity', 'Brand Strategy', 'Style Guidelines', 'Brand Collateral'],
-  },
-  {
-    n: '02',
-    title: 'UI & UX Design',
-    desc: 'User-centred interfaces that are intuitive, accessible, and compelling. Flows, wireframes, and high-fidelity prototypes.',
-    features: ['User Research', 'Wireframing', 'UI Design', 'Interactive Prototypes'],
-  },
-  {
-    n: '03',
-    title: 'Creative Development',
-    desc: 'Bridging design and code — responsive, performant websites with pixel-perfect precision and animations that bring designs to life.',
-    features: ['Next.js / React', 'Motion & Animation', 'Responsive Dev', 'CMS Integration'],
-  },
-  {
-    n: '04',
-    title: 'Motion & Interaction',
-    desc: 'Micro-interactions, transitions, and scroll animations that elevate experiences from good to unforgettable.',
-    features: ['Framer Motion', 'GSAP', 'Interaction Design', 'Scroll Experiences'],
-  },
-  {
-    n: '05',
-    title: 'Design Systems',
-    desc: 'Scalable, documented component libraries that keep teams aligned and products consistent.',
-    features: ['Component Libraries', 'Design Tokens', 'Documentation', 'Figma Systems'],
-  },
-  {
-    n: '06',
-    title: 'Digital Strategy',
-    desc: 'Strategic thinking for digital products — user journey mapping, content strategy, and conversion optimisation.',
-    features: ['User Journey Mapping', 'Content Strategy', 'CRO', 'Launch Strategy'],
-  },
+gsap.registerPlugin(ScrollTrigger, useGSAP)
+
+const SERVICES = [
+  { n: '01', title: 'Brand Identity & Strategy',   desc: 'Logos, colour systems, positioning, and brand guidelines. Strategy-first, aesthetics-always.' },
+  { n: '02', title: 'UI & UX Design',               desc: 'User-centred interfaces — wireframes, flows, and high-fidelity prototypes that delight.' },
+  { n: '03', title: 'Creative Development',         desc: 'Responsive websites and apps built with pixel-perfect precision and smooth animations.' },
+  { n: '04', title: 'Motion & Interaction',         desc: 'Micro-interactions, scroll experiences, and motion design that make products unforgettable.' },
+  { n: '05', title: 'Design Systems',               desc: 'Scalable component libraries and documentation that keep teams aligned and products consistent.' },
+  { n: '06', title: 'Digital Strategy',             desc: 'Journey mapping, content strategy, and conversion optimisation for ambitious digital products.' },
 ]
 
 export default function Services() {
-  const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const sectionRef = useRef<HTMLElement>(null)
+
+  useGSAP(() => {
+    if (!sectionRef.current) return
+
+    // Heading reveal
+    const lines = sectionRef.current.querySelectorAll<HTMLElement>('.reveal-inner')
+    gsap.fromTo(lines,
+      { yPercent: 105, opacity: 0 },
+      {
+        yPercent: 0, opacity: 1,
+        stagger: 0.08, duration: 0.9, ease: 'power4.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+      }
+    )
+
+    // Service rows stagger in
+    const rows = sectionRef.current.querySelectorAll<HTMLElement>('.service-row')
+    rows.forEach((row) => {
+      gsap.fromTo(row,
+        { opacity: 0, y: 24 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+          scrollTrigger: { trigger: row, start: 'top 90%', once: true },
+        }
+      )
+    })
+  }, { scope: sectionRef })
 
   return (
-    <section id="services" ref={ref} className="section bg-[#080808]">
+    <section id="services" ref={sectionRef} className="section bg-[#050505]">
       <div className="max-w-[1400px] mx-auto">
         <div className="section-label">03 — Services</div>
 
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-display font-light tracking-[-0.02em] text-white leading-[1.1]"
-          >
-            What I bring
-            <br />
-            <span className="italic text-[#888]">to the table.</span>
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.3 }}
-            className="text-sm text-[#555] max-w-xs"
-          >
-            Full-spectrum design and development for founders, studios, and ambitious brands.
-          </motion.p>
+          <div className="overflow-hidden">
+            <h2 className="reveal-inner text-4xl md:text-5xl lg:text-6xl font-display font-extralight text-white tracking-[-0.03em] leading-[1.05]">
+              What I bring
+              <br />
+              <em className="not-italic text-[#555]">to the table.</em>
+            </h2>
+          </div>
+          <div className="overflow-hidden">
+            <p className="reveal-inner text-sm text-[#444] max-w-xs leading-relaxed">
+              Full-spectrum design and development for founders, studios, and ambitious brands.
+            </p>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#161616] rounded-2xl overflow-hidden">
-          {services.map((s, i) => (
-            <motion.div
-              key={s.n}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.1 + i * 0.08 }}
-              className="group bg-[#0a0a0a] p-8 hover:bg-[#0e0e0e] transition-colors duration-300 flex flex-col"
-            >
-              <div className="flex items-center justify-between mb-6">
-                <span className="text-[11px] font-mono text-accent">{s.n}</span>
-                <span className="text-[#333] text-lg group-hover:text-accent transition-colors duration-300">↗</span>
+        {/* Services as numbered list */}
+        <ul>
+          {SERVICES.map((s, i) => (
+            <li key={s.n} className="service-row opacity-0">
+              <div className="hr" />
+              <div className="py-6 md:py-8 grid grid-cols-[40px_1fr] md:grid-cols-[64px_1fr_auto] gap-x-6 md:gap-x-10 items-center group">
+                <span className="text-[11px] font-mono text-[#333] group-hover:text-accent transition-colors duration-300">
+                  {s.n}
+                </span>
+                <div>
+                  <h3 className="text-lg md:text-xl font-display font-light text-white group-hover:text-accent transition-colors duration-300 mb-1">
+                    {s.title}
+                  </h3>
+                  <p className="text-sm text-[#444] leading-relaxed max-w-xl">{s.desc}</p>
+                </div>
+                <span className="hidden md:block text-xl text-[#1a1a1a] group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300">
+                  ↗
+                </span>
               </div>
-              <h3 className="text-base font-display font-medium text-white mb-3 group-hover:text-accent transition-colors duration-300">
-                {s.title}
-              </h3>
-              <p className="text-sm text-[#666] leading-relaxed mb-6 flex-1">{s.desc}</p>
-              <ul className="space-y-1.5">
-                {s.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-[11px] text-[#444]">
-                    <span className="w-1 h-1 rounded-full bg-accent flex-shrink-0" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+            </li>
           ))}
-        </div>
+          <li><div className="hr" /></li>
+        </ul>
       </div>
     </section>
   )

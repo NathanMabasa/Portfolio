@@ -10,19 +10,20 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Lenis handles scroll — keep default scroll behaviour */
+  scroll-behavior: auto;
 }
 
 body {
-  background-color: #0a0a0a;
-  color: #f0f0f0;
+  background-color: #000000;
+  color: #ffffff;
   overflow-x: hidden;
   font-family: var(--font-montserrat), sans-serif;
 }
 
-/* Custom cursor: hide default on desktop */
+/* Custom cursor on desktop */
 @media (pointer: fine) {
   *, *::before, *::after { cursor: none !important; }
 }
@@ -30,33 +31,49 @@ body {
 /* ─── Selection ─────────────────────────────────────── */
 ::selection {
   background-color: #CAFF33;
-  color: #0a0a0a;
+  color: #000000;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────── */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: #0a0a0a; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+::-webkit-scrollbar          { width: 2px; }
+::-webkit-scrollbar-track    { background: #000; }
+::-webkit-scrollbar-thumb    { background: #222; }
 ::-webkit-scrollbar-thumb:hover { background: #CAFF33; }
 
-/* ─── Noise grain overlay ───────────────────────────── */
+/* ─── Noise overlay ─────────────────────────────────── */
 .noise-overlay {
   position: fixed;
   inset: 0;
   z-index: 9000;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ─── Section spacing ───────────────────────────────── */
-.section {
-  @apply px-6 md:px-16 py-24 md:py-32;
+/* ─── Grid system ───────────────────────────────────── */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(16px, 2vw, 32px);
 }
 
+/* ─── Section ───────────────────────────────────────── */
+.section {
+  padding: clamp(80px, 10vw, 140px) clamp(24px, 5vw, 80px);
+}
+
+/* ─── Section label ─────────────────────────────────── */
 .section-label {
-  @apply text-[11px] tracking-[0.22em] uppercase text-[#555] mb-8 flex items-center gap-3 font-medium;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #444;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
 }
 
 .section-label::before {
@@ -68,19 +85,42 @@ body {
   flex-shrink: 0;
 }
 
-/* ─── Gradient orbs ─────────────────────────────────── */
-.orb {
-  @apply absolute rounded-full pointer-events-none blur-3xl opacity-15;
+/* ─── Reveal clip — outer clips, inner animates ─────── */
+.reveal-clip {
+  overflow: hidden;
+  display: block;
+}
+
+/* ─── Horizontal rule ───────────────────────────────── */
+.hr {
+  width: 100%;
+  height: 1px;
+  background: #1a1a1a;
+}
+
+.hr-white {
+  width: 100%;
+  height: 1px;
+  background: #ffffff;
 }
 
 /* ─── Marquee ───────────────────────────────────────── */
-.marquee-wrapper { @apply overflow-hidden whitespace-nowrap; }
-.marquee-track   { @apply inline-flex; animation: marquee 30s linear infinite; }
+.marquee-wrapper { overflow: hidden; white-space: nowrap; }
+.marquee-track   { display: inline-flex; animation: marquee 32s linear infinite; }
 .marquee-track:hover { animation-play-state: paused; }
-.marquee-track-reverse { @apply inline-flex; animation: marquee-reverse 30s linear infinite; }
+.marquee-track-reverse { display: inline-flex; animation: marquee-reverse 32s linear infinite; }
 
-/* ─── Link underline ────────────────────────────────── */
-.link-underline { @apply relative inline-block; }
+@keyframes marquee {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-reverse {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+/* ─── Link hover underline ──────────────────────────── */
+.link-underline { position: relative; display: inline-block; }
 .link-underline::after {
   content: '';
   position: absolute;
