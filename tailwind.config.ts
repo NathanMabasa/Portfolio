@@ -8,28 +8,28 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-montserrat)', 'sans-serif'],
+        display: ['var(--font-montserrat)', 'sans-serif'],
+        body: ['var(--font-montserrat)', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
       colors: {
-        bg: '#090909',
+        bg: '#0a0a0a',
         surface: '#111111',
-        surface2: '#1a1a1a',
+        surface2: '#181818',
         border: '#222222',
         fg: '#F0F0F0',
         'fg-2': '#888888',
         'fg-3': '#444444',
         accent: '#CAFF33',
-        'accent-dim': 'rgba(202,255,51,0.12)',
-      },
-      fontFamily: {
-        display: ['var(--font-syne)', 'sans-serif'],
-        body: ['var(--font-inter)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
+        'accent-dim': 'rgba(202,255,51,0.10)',
       },
       animation: {
-        marquee: 'marquee 25s linear infinite',
-        'marquee-reverse': 'marquee-reverse 25s linear infinite',
-        'spin-slow': 'spin 8s linear infinite',
-        'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
-        'float': 'float 6s ease-in-out infinite',
+        marquee: 'marquee 30s linear infinite',
+        'marquee-reverse': 'marquee-reverse 30s linear infinite',
+        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+        float: 'float 6s ease-in-out infinite',
       },
       keyframes: {
         marquee: {
@@ -41,16 +41,13 @@ const config: Config = {
           '100%': { transform: 'translateX(0%)' },
         },
         'pulse-glow': {
-          '0%, 100%': { opacity: '0.4', transform: 'scale(1)' },
-          '50%': { opacity: '0.8', transform: 'scale(1.05)' },
+          '0%, 100%': { opacity: '0.3', transform: 'scale(1)' },
+          '50%': { opacity: '0.6', transform: 'scale(1.04)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
+          '50%': { transform: 'translateY(-16px)' },
         },
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
     },
   },

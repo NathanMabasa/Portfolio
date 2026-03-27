@@ -2,14 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-syne: 'Syne', sans-serif;
-  --font-inter: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
-
 /* ─── Base ─────────────────────────────────────────── */
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -22,36 +16,28 @@ html {
 }
 
 body {
-  background-color: #090909;
-  color: #F0F0F0;
+  background-color: #0a0a0a;
+  color: #f0f0f0;
   overflow-x: hidden;
+  font-family: var(--font-montserrat), sans-serif;
 }
 
-/* Hide default cursor site-wide (custom cursor active) */
-*, *::before, *::after {
-  cursor: none !important;
+/* Custom cursor: hide default on desktop */
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
 }
 
 /* ─── Selection ─────────────────────────────────────── */
 ::selection {
   background-color: #CAFF33;
-  color: #090909;
+  color: #0a0a0a;
 }
 
 /* ─── Scrollbar ─────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #111;
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #CAFF33;
-}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #CAFF33; }
 
 /* ─── Noise grain overlay ───────────────────────────── */
 .noise-overlay {
@@ -59,77 +45,55 @@ body {
   inset: 0;
   z-index: 9000;
   pointer-events: none;
-  opacity: 0.035;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
 /* ─── Section spacing ───────────────────────────────── */
 .section {
-  @apply px-6 md:px-12 lg:px-20 py-24 md:py-32;
+  @apply px-6 md:px-16 py-24 md:py-32;
 }
 
 .section-label {
-  @apply text-xs font-mono tracking-[0.25em] uppercase text-fg-2 mb-6 flex items-center gap-3;
+  @apply text-[11px] tracking-[0.22em] uppercase text-[#555] mb-8 flex items-center gap-3 font-medium;
 }
 
 .section-label::before {
   content: '';
   display: block;
-  width: 24px;
+  width: 20px;
   height: 1px;
   background: #CAFF33;
+  flex-shrink: 0;
 }
 
 /* ─── Gradient orbs ─────────────────────────────────── */
 .orb {
-  @apply absolute rounded-full pointer-events-none blur-3xl opacity-20;
+  @apply absolute rounded-full pointer-events-none blur-3xl opacity-15;
 }
 
-/* ─── Marquee container ─────────────────────────────── */
-.marquee-wrapper {
-  @apply overflow-hidden whitespace-nowrap;
-}
+/* ─── Marquee ───────────────────────────────────────── */
+.marquee-wrapper { @apply overflow-hidden whitespace-nowrap; }
+.marquee-track   { @apply inline-flex; animation: marquee 30s linear infinite; }
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-track-reverse { @apply inline-flex; animation: marquee-reverse 30s linear infinite; }
 
-.marquee-track {
-  @apply inline-flex;
-  animation: marquee 30s linear infinite;
-}
-
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-
-.marquee-track-reverse {
-  @apply inline-flex;
-  animation: marquee-reverse 30s linear infinite;
-}
-
-/* ─── Smooth underline link ─────────────────────────── */
-.link-underline {
-  @apply relative inline-block;
-}
-
+/* ─── Link underline ────────────────────────────────── */
+.link-underline { @apply relative inline-block; }
 .link-underline::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
+  bottom: -1px; left: 0;
+  width: 0; height: 1px;
   background: #CAFF33;
   transition: width 0.3s ease;
 }
-
-.link-underline:hover::after {
-  width: 100%;
-}
+.link-underline:hover::after { width: 100%; }
 
 /* ─── Reduced motion ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

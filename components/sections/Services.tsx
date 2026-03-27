@@ -2,113 +2,98 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import TextReveal from '@/components/ui/TextReveal'
 
 const services = [
   {
-    number: '01',
+    n: '01',
     title: 'Brand Identity & Strategy',
-    description:
-      'From positioning and naming to logos, colour systems, and guidelines — I build brands that resonate and endure. Strategy-first, aesthetics-always.',
-    features: ['Logo & Visual Identity', 'Brand Strategy', 'Guidelines & Systems', 'Brand Collateral'],
+    desc: 'From positioning to logos, colour systems, and guidelines — brands that resonate and endure. Strategy-first, aesthetics-always.',
+    features: ['Logo & Visual Identity', 'Brand Strategy', 'Style Guidelines', 'Brand Collateral'],
   },
   {
-    number: '02',
+    n: '02',
     title: 'UI & UX Design',
-    description:
-      'User-centred interfaces that are intuitive, accessible, and visually compelling. I design flows, wireframes, and high-fidelity prototypes that delight users.',
+    desc: 'User-centred interfaces that are intuitive, accessible, and compelling. Flows, wireframes, and high-fidelity prototypes.',
     features: ['User Research', 'Wireframing', 'UI Design', 'Interactive Prototypes'],
   },
   {
-    number: '03',
+    n: '03',
     title: 'Creative Development',
-    description:
-      'I bridge design and code — building responsive, performant websites and web apps with pixel-perfect precision and smooth animations that bring designs to life.',
-    features: ['Next.js / React', 'Motion & Animation', 'Responsive Development', 'CMS Integration'],
+    desc: 'Bridging design and code — responsive, performant websites with pixel-perfect precision and animations that bring designs to life.',
+    features: ['Next.js / React', 'Motion & Animation', 'Responsive Dev', 'CMS Integration'],
   },
   {
-    number: '04',
+    n: '04',
     title: 'Motion & Interaction',
-    description:
-      'Micro-interactions, transitions, scroll animations, and motion design that elevate digital experiences from good to unforgettable.',
-    features: ['Framer Motion', 'GSAP Animations', 'Interaction Design', 'Scroll Experiences'],
+    desc: 'Micro-interactions, transitions, and scroll animations that elevate experiences from good to unforgettable.',
+    features: ['Framer Motion', 'GSAP', 'Interaction Design', 'Scroll Experiences'],
   },
   {
-    number: '05',
+    n: '05',
     title: 'Design Systems',
-    description:
-      'Scalable, documented component libraries that keep teams aligned and products consistent. Built to grow with your product.',
+    desc: 'Scalable, documented component libraries that keep teams aligned and products consistent.',
     features: ['Component Libraries', 'Design Tokens', 'Documentation', 'Figma Systems'],
   },
   {
-    number: '06',
+    n: '06',
     title: 'Digital Strategy',
-    description:
-      'Strategic thinking for digital products — from user journey mapping and content strategy to conversion optimisation and go-to-market positioning.',
+    desc: 'Strategic thinking for digital products — user journey mapping, content strategy, and conversion optimisation.',
     features: ['User Journey Mapping', 'Content Strategy', 'CRO', 'Launch Strategy'],
   },
 ]
 
 export default function Services() {
   const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="services" ref={ref} className="section relative overflow-hidden bg-surface">
-      <div className="orb w-[400px] h-[400px] bg-accent/5 bottom-0 left-0 animate-pulse-glow" />
+    <section id="services" ref={ref} className="section bg-[#080808]">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="section-label">03 — Services</div>
 
-      <div className="max-w-[1400px] mx-auto relative z-10">
-        {/* Label */}
-        <div className="section-label">
-          <span>03 — Services</span>
-        </div>
-
-        {/* Heading */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
-          <TextReveal>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-[1.05]">
-              What I Bring
-              <br />
-              <span className="text-accent">to the Table</span>
-            </h2>
-          </TextReveal>
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-5xl font-display font-light tracking-[-0.02em] text-white leading-[1.1]"
+          >
+            What I bring
+            <br />
+            <span className="italic text-[#888]">to the table.</span>
+          </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-fg-2 text-sm font-body max-w-xs"
+            transition={{ delay: 0.3 }}
+            className="text-sm text-[#555] max-w-xs"
           >
-            Full-spectrum design and development services tailored to founders, studios, and ambitious brands.
+            Full-spectrum design and development for founders, studios, and ambitious brands.
           </motion.p>
         </div>
 
-        {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border rounded-2xl overflow-hidden">
-          {services.map((service, i) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#161616] rounded-2xl overflow-hidden">
+          {services.map((s, i) => (
             <motion.div
-              key={service.number}
-              initial={{ opacity: 0, y: 30 }}
+              key={s.n}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="group bg-bg p-8 hover:bg-surface transition-colors duration-300 flex flex-col"
+              transition={{ duration: 0.6, delay: 0.1 + i * 0.08 }}
+              className="group bg-[#0a0a0a] p-8 hover:bg-[#0e0e0e] transition-colors duration-300 flex flex-col"
             >
-              <div className="flex items-start justify-between mb-6">
-                <span className="text-xs font-mono text-accent">{service.number}</span>
-                <span className="text-xl text-fg-3 group-hover:text-accent transition-colors duration-300">
-                  ↗
-                </span>
+              <div className="flex items-center justify-between mb-6">
+                <span className="text-[11px] font-mono text-accent">{s.n}</span>
+                <span className="text-[#333] text-lg group-hover:text-accent transition-colors duration-300">↗</span>
               </div>
-              <h3 className="text-xl font-display font-bold text-white mb-3 group-hover:text-accent transition-colors duration-400">
-                {service.title}
+              <h3 className="text-base font-display font-medium text-white mb-3 group-hover:text-accent transition-colors duration-300">
+                {s.title}
               </h3>
-              <p className="text-fg-2 text-sm leading-relaxed font-body mb-6 flex-1">
-                {service.description}
-              </p>
+              <p className="text-sm text-[#666] leading-relaxed mb-6 flex-1">{s.desc}</p>
               <ul className="space-y-1.5">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-xs text-fg-3 font-body">
+                {s.features.map((f) => (
+                  <li key={f} className="flex items-center gap-2 text-[11px] text-[#444]">
                     <span className="w-1 h-1 rounded-full bg-accent flex-shrink-0" />
-                    {feature}
+                    {f}
                   </li>
                 ))}
               </ul>

@@ -2,13 +2,12 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 import { ContactFormData } from '@/lib/validations'
-import TextReveal from '@/components/ui/TextReveal'
-import MagneticButton from '@/components/ui/MagneticButton'
 
-type FormStatus = 'idle' | 'loading' | 'success' | 'error'
+type Status = 'idle' | 'loading' | 'success' | 'error'
 
-const socialLinks = [
+const socials = [
   { label: 'LinkedIn', href: 'https://linkedin.com/in/nyikonathan-mabasa/', handle: '@nyikonathan-mabasa' },
   { label: 'Instagram', href: 'https://instagram.com/nathanmabasa', handle: '@nathanmabasa' },
   { label: 'Twitter / X', href: 'https://twitter.com/nathanmabasa', handle: '@nathanmabasa' },
@@ -16,8 +15,8 @@ const socialLinks = [
 
 export default function Contact() {
   const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
-  const [status, setStatus] = useState<FormStatus>('idle')
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({})
 
@@ -41,239 +40,149 @@ export default function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
-
       const json = await res.json()
-
       if (!res.ok) {
-        if (json.details) {
-          setFieldErrors(json.details)
-          setStatus('idle')
-        } else {
-          setErrorMsg(json.error ?? 'Something went wrong.')
-          setStatus('error')
-        }
+        if (json.details) { setFieldErrors(json.details); setStatus('idle') }
+        else { setErrorMsg(json.error ?? 'Something went wrong.'); setStatus('error') }
         return
       }
-
       setStatus('success')
       form.reset()
     } catch {
-      setErrorMsg('Network error. Please check your connection and try again.')
+      setErrorMsg('Network error. Please try again.')
       setStatus('error')
     }
   }
 
-  const inputClass =
-    'w-full bg-surface border border-border rounded-xl px-5 py-4 text-fg placeholder-fg-3 text-sm font-body focus:outline-none focus:border-accent transition-colors duration-300 hover:border-fg-3'
+  const field = 'w-full bg-transparent border border-[#1e1e1e] rounded-lg px-5 py-3.5 text-sm text-white placeholder-[#444] focus:outline-none focus:border-[#444] hover:border-[#2a2a2a] transition-colors duration-200'
 
   return (
-    <section id="contact" ref={ref} className="section relative overflow-hidden">
-      <div className="orb w-[500px] h-[500px] bg-accent/6 -bottom-48 -right-48 animate-pulse-glow" />
+    <section id="contact" ref={ref} className="section bg-[#0a0a0a]">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="section-label">04 — Contact</div>
 
-      <div className="max-w-[1400px] mx-auto relative z-10">
-        {/* Label */}
-        <div className="section-label">
-          <span>04 — Contact</span>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24">
-          {/* Left: info */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-28">
+          {/* Left */}
           <div>
-            <TextReveal>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-[1.0] mb-8">
-                Let&apos;s Work
-                <br />
-                <span className="text-accent">Together</span>
-              </h2>
-            </TextReveal>
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-5xl font-display font-light tracking-[-0.02em] text-white leading-[1.1] mb-8"
+            >
+              Let&apos;s work
+              <br />
+              <span className="italic text-[#888]">together.</span>
+            </motion.h2>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-fg-2 text-base leading-relaxed font-body mb-10"
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.25 }}
+              className="text-sm text-[#666] leading-relaxed mb-10 max-w-sm"
             >
               Have a project in mind? Ready to elevate your brand or build something remarkable?
-              I&apos;m always open to new challenges — whether it&apos;s a full brand identity,
-              a website redesign, or a long-term creative partnership.
+              I&apos;m always open to new challenges and long-term creative partnerships.
             </motion.p>
 
-            {/* Direct email */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="mb-10"
+            <motion.a
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.35 }}
+              href="mailto:hello@nathanmabasa.com"
+              className="block text-2xl md:text-3xl font-display font-light text-white hover:text-accent transition-colors duration-300 mb-12 link-underline"
             >
-              <p className="text-xs font-mono text-fg-3 uppercase tracking-widest mb-2">
-                Or reach me directly
-              </p>
-              <a
-                href="mailto:hello@nathanmabasa.com"
-                className="text-2xl md:text-3xl font-display font-bold text-white hover:text-accent transition-colors duration-300 link-underline"
-              >
-                hello@nathanmabasa.com
-              </a>
-            </motion.div>
+              hello@nathanmabasa.com
+            </motion.a>
 
-            {/* Social links */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.5 }}
+              initial={{ opacity: 0 }}
+              animate={isInView ? { opacity: 1 } : {}}
+              transition={{ delay: 0.45 }}
             >
-              <p className="text-xs font-mono text-fg-3 uppercase tracking-widest mb-4">
-                Find me online
-              </p>
+              <p className="text-[11px] tracking-[0.2em] uppercase text-[#444] mb-5">Find me online</p>
               <div className="space-y-3">
-                {socialLinks.map((s) => (
+                {socials.map((s) => (
                   <a
                     key={s.label}
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between group border-b border-border pb-3 hover:border-accent transition-colors duration-300"
+                    className="flex items-center justify-between border-b border-[#161616] pb-3 group hover:border-[#2a2a2a] transition-colors duration-300"
                   >
-                    <span className="text-sm font-body text-fg-2 group-hover:text-white transition-colors">
-                      {s.label}
-                    </span>
-                    <span className="text-sm font-mono text-fg-3 group-hover:text-accent transition-colors">
-                      {s.handle} ↗
-                    </span>
+                    <span className="text-sm text-[#666] group-hover:text-white transition-colors">{s.label}</span>
+                    <span className="text-xs font-mono text-[#444] group-hover:text-accent transition-colors">{s.handle} ↗</span>
                   </a>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Right: form */}
+          {/* Right: Form */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           >
             {status === 'success' ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center h-full text-center py-20 rounded-2xl border border-accent/30 bg-accent/5"
-              >
-                <div className="text-5xl mb-6">✓</div>
-                <h3 className="text-2xl font-display font-bold text-white mb-3">
-                  Message Sent!
-                </h3>
-                <p className="text-fg-2 text-sm font-body max-w-xs">
+              <div className="flex flex-col items-center justify-center h-full text-center py-20 rounded-xl border border-accent/20 bg-accent/5">
+                <div className="text-4xl mb-5 text-accent">✓</div>
+                <h3 className="text-xl font-display font-medium text-white mb-2">Message sent</h3>
+                <p className="text-sm text-[#666] max-w-xs mb-6">
                   Thanks for reaching out. I&apos;ll get back to you within 1–2 business days.
                 </p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  className="mt-6 text-accent text-sm font-body hover:underline"
-                >
-                  Send another message
+                <button onClick={() => setStatus('idle')} className="text-xs text-[#666] hover:text-accent transition-colors">
+                  Send another →
                 </button>
-              </motion.div>
+              </div>
             ) : (
-              <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              <form onSubmit={handleSubmit} noValidate className="space-y-4">
                 {/* Name */}
                 <div>
-                  <label htmlFor="name" className="block text-xs font-mono text-fg-3 uppercase tracking-widest mb-2">
-                    Your Name *
-                  </label>
-                  <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    required
-                    autoComplete="name"
-                    placeholder="Nathan Mabasa"
-                    className={inputClass}
-                    aria-describedby={fieldErrors.name ? 'name-error' : undefined}
-                  />
-                  {fieldErrors.name && (
-                    <p id="name-error" className="mt-1 text-xs text-red-400">{fieldErrors.name[0]}</p>
-                  )}
+                  <input id="name" name="name" type="text" required autoComplete="name"
+                    placeholder="Your name *" className={field}
+                    aria-describedby={fieldErrors.name ? 'name-err' : undefined} />
+                  {fieldErrors.name && <p id="name-err" className="mt-1 text-xs text-red-400">{fieldErrors.name[0]}</p>}
                 </div>
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block text-xs font-mono text-fg-3 uppercase tracking-widest mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    placeholder="hello@yourcompany.com"
-                    className={inputClass}
-                    aria-describedby={fieldErrors.email ? 'email-error' : undefined}
-                  />
-                  {fieldErrors.email && (
-                    <p id="email-error" className="mt-1 text-xs text-red-400">{fieldErrors.email[0]}</p>
-                  )}
+                  <input id="email" name="email" type="email" required autoComplete="email"
+                    placeholder="Email address *" className={field}
+                    aria-describedby={fieldErrors.email ? 'email-err' : undefined} />
+                  {fieldErrors.email && <p id="email-err" className="mt-1 text-xs text-red-400">{fieldErrors.email[0]}</p>}
                 </div>
 
                 {/* Subject */}
-                <div>
-                  <label htmlFor="subject" className="block text-xs font-mono text-fg-3 uppercase tracking-widest mb-2">
-                    Subject
-                  </label>
-                  <input
-                    id="subject"
-                    name="subject"
-                    type="text"
-                    autoComplete="off"
-                    placeholder="Brand identity for my startup"
-                    className={inputClass}
-                  />
-                </div>
+                <input id="subject" name="subject" type="text" autoComplete="off"
+                  placeholder="Subject (optional)" className={field} />
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-xs font-mono text-fg-3 uppercase tracking-widest mb-2">
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="Tell me about your project, timeline, and budget..."
-                    className={`${inputClass} resize-none`}
-                    aria-describedby={fieldErrors.message ? 'message-error' : undefined}
-                  />
-                  {fieldErrors.message && (
-                    <p id="message-error" className="mt-1 text-xs text-red-400">{fieldErrors.message[0]}</p>
-                  )}
+                  <textarea id="message" name="message" required rows={5}
+                    placeholder="Tell me about your project... *"
+                    className={`${field} resize-none`}
+                    aria-describedby={fieldErrors.message ? 'msg-err' : undefined} />
+                  {fieldErrors.message && <p id="msg-err" className="mt-1 text-xs text-red-400">{fieldErrors.message[0]}</p>}
                 </div>
 
-                {/* Error message */}
                 {status === 'error' && (
-                  <p className="text-sm text-red-400 font-body" role="alert">
-                    {errorMsg}
-                  </p>
+                  <p className="text-xs text-red-400" role="alert">{errorMsg}</p>
                 )}
 
-                {/* Submit */}
-                <MagneticButton className="w-full" strength={0.15}>
-                  <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="w-full py-5 bg-accent text-black font-display font-bold text-base rounded-xl hover:bg-white disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-3"
-                  >
-                    {status === 'loading' ? (
-                      <>
-                        <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      'Send Message →'
-                    )}
-                  </button>
-                </MagneticButton>
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="w-full flex items-center justify-center gap-2.5 py-4 bg-accent text-black text-sm font-medium rounded-lg hover:bg-white disabled:opacity-50 transition-all duration-200"
+                >
+                  {status === 'loading' ? (
+                    <><span className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />Sending...</>
+                  ) : (
+                    <>Send Message <ArrowRight className="w-4 h-4" /></>
+                  )}
+                </button>
 
-                <p className="text-xs text-fg-3 font-body text-center">
+                <p className="text-[11px] text-[#444] text-center">
                   Your information is kept private and never shared.
                 </p>
               </form>

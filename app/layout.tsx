@@ -1,20 +1,13 @@
 import type { Metadata } from 'next'
-import { Syne, Inter } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 import GrainOverlay from '@/components/GrainOverlay'
 
-const syne = Syne({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-syne',
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-})
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  weight: ['300', '400', '500', '600'],
+  variable: '--font-montserrat',
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 })
 
@@ -79,14 +72,7 @@ export const metadata: Metadata = {
     description:
       'South African digital designer and creative developer specializing in immersive web experiences, brand identity, and UI/UX design.',
     siteName: 'Nathan Mabasa',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Nathan Mabasa — Digital Designer & Creative Developer',
-      },
-    ],
+    images: [{ url: '/og-image.jpg', width: 1200, height: 630, alt: 'Nathan Mabasa' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -108,21 +94,19 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  category: 'portfolio',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable}`}>
+    <html lang="en" className={montserrat.variable}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body className="bg-bg text-fg font-body antialiased">
+      <body className="bg-[#0a0a0a] text-white font-sans antialiased">
         <GrainOverlay />
         <CustomCursor />
         {children}

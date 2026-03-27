@@ -1,4 +1,3 @@
-import Navigation from '@/components/Navigation'
 import Hero from '@/components/sections/Hero'
 import Skills from '@/components/sections/Skills'
 import About from '@/components/sections/About'
@@ -10,7 +9,6 @@ import Footer from '@/components/sections/Footer'
 export default function Home() {
   return (
     <main>
-      <Navigation />
       <Hero />
       <Skills />
       <About />

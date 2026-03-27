@@ -1,53 +1,42 @@
 'use client'
 
 const skills = [
-  'Brand Identity',
-  'UI Design',
-  'UX Strategy',
-  'Motion Design',
-  'Creative Development',
-  'Design Systems',
-  'Web Development',
-  'Visual Identity',
-  'Interaction Design',
-  'Figma',
-  'Next.js',
-  'Tailwind CSS',
-  'Digital Strategy',
-  'Typography',
-  'Prototyping',
+  'Brand Identity', 'UI Design', 'UX Strategy', 'Motion Design',
+  'Creative Development', 'Design Systems', 'Web Development',
+  'Visual Identity', 'Interaction Design', 'Figma', 'Next.js',
+  'Tailwind CSS', 'Digital Strategy', 'Typography', 'Prototyping',
 ]
 
-const skillsDoubled = [...skills, ...skills]
+const doubled = [...skills, ...skills]
 
 export default function Skills() {
   return (
-    <section aria-label="Skills" className="py-8 border-y border-border overflow-hidden">
-      {/* Row 1 — left to right */}
-      <div className="marquee-wrapper mb-4">
-        <div className="marquee-track gap-8">
-          {skillsDoubled.map((skill, i) => (
+    <section aria-label="Skills" className="py-7 border-y border-[#141414] bg-[#080808] overflow-hidden">
+      {/* Row 1 */}
+      <div className="marquee-wrapper mb-3">
+        <div className="marquee-track">
+          {doubled.map((s, i) => (
             <span
               key={`a-${i}`}
-              className="inline-flex items-center gap-6 text-sm font-display font-medium uppercase tracking-widest text-fg-2 whitespace-nowrap px-4"
+              className="inline-flex items-center gap-5 text-[11px] font-sans font-medium uppercase tracking-[0.18em] text-[#3a3a3a] whitespace-nowrap px-5"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
-              {skill}
+              <span className="w-1 h-1 rounded-full bg-accent flex-shrink-0" />
+              {s}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Row 2 — right to left */}
+      {/* Row 2 */}
       <div className="marquee-wrapper">
-        <div className="marquee-track-reverse gap-8">
-          {[...skillsDoubled].reverse().map((skill, i) => (
+        <div className="marquee-track-reverse">
+          {[...doubled].reverse().map((s, i) => (
             <span
               key={`b-${i}`}
-              className="inline-flex items-center gap-6 text-sm font-display font-medium uppercase tracking-widest text-fg-3 whitespace-nowrap px-4 hover:text-accent transition-colors duration-300"
+              className="inline-flex items-center gap-5 text-[11px] font-sans font-medium uppercase tracking-[0.18em] text-[#2a2a2a] whitespace-nowrap px-5 hover:text-[#555] transition-colors duration-300"
             >
-              <span className="w-1.5 h-1.5 rounded-full border border-fg-3 flex-shrink-0" />
-              {skill}
+              <span className="w-1 h-1 rounded-full border border-[#2a2a2a] flex-shrink-0" />
+              {s}
             </span>
           ))}
         </div>

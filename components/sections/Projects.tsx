@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import TextReveal from '@/components/ui/TextReveal'
+import { ArrowUpRight } from 'lucide-react'
 
 const projects = [
   {
@@ -10,115 +10,100 @@ const projects = [
     title: 'Comtech Network Solutions',
     category: 'Web Design & Development',
     description:
-      'Full-stack web design and development for an IT infrastructure company. Crafted a clean, professional digital presence that communicates technical authority while remaining approachable to all stakeholders.',
+      'Full-stack web design and development for an IT infrastructure company. A clean, authoritative digital presence that communicates technical expertise while remaining approachable to all stakeholders.',
     tags: ['Web Design', 'Development', 'Brand', 'UI/UX'],
     year: '2024',
     accent: '#0066FF',
-    bg: 'from-blue-950/40 to-surface',
+    highlight: 'rgba(0,102,255,0.06)',
   },
   {
     number: '02',
     title: 'The Media Krate',
     category: 'Brand Identity & Web Design',
     description:
-      'Comprehensive brand identity and web design for a dynamic media brand. Built a visual language that captures the energy and creativity of the media industry, from logo system through to digital touchpoints.',
+      'Comprehensive brand identity and web design for a dynamic media brand. A visual language that captures the energy and creativity of media — from logo system through to every digital touchpoint.',
     tags: ['Brand Identity', 'Logo Design', 'Web Design', 'Strategy'],
     year: '2024',
     accent: '#9B5CF6',
-    bg: 'from-purple-950/40 to-surface',
+    highlight: 'rgba(155,92,246,0.06)',
   },
   {
     number: '03',
     title: 'Maxwell Stay',
     category: 'Luxury Hospitality UI/UX',
     description:
-      'Elevated UI/UX design and development for a luxury hospitality brand. The experience centres around warmth, exclusivity and effortless booking — ensuring every interaction reflects the premium nature of the property.',
+      'Elevated UI/UX design and development for a luxury hospitality brand. Every interaction reflects warmth, exclusivity, and effortless navigation — ensuring the experience matches the quality of the property.',
     tags: ['UI/UX Design', 'Development', 'Luxury', 'Hospitality'],
     year: '2024',
     accent: '#F5C842',
-    bg: 'from-yellow-950/30 to-surface',
+    highlight: 'rgba(245,200,66,0.05)',
   },
 ]
 
 export default function Projects() {
   const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-80px' })
-  const [activeProject, setActiveProject] = useState<number | null>(null)
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const [active, setActive] = useState<number | null>(null)
 
   return (
-    <section id="work" ref={ref} className="section relative">
+    <section id="work" ref={ref} className="section bg-[#0a0a0a]">
       <div className="max-w-[1400px] mx-auto">
-        {/* Label */}
-        <div className="section-label">
-          <span>02 — Work</span>
-        </div>
+        <div className="section-label">02 — Work</div>
 
-        {/* Heading row */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <TextReveal>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-[1.05]">
-              Selected Projects
-            </h2>
-          </TextReveal>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl md:text-5xl font-display font-light tracking-[-0.02em] text-white leading-[1.1]"
+          >
+            Selected Projects
+          </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-fg-2 text-sm font-body max-w-xs"
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-sm text-[#555] max-w-xs"
           >
-            A selection of recent projects across brand, UI/UX, and creative development.
+            A selection of recent work across brand, UI/UX, and creative development.
           </motion.p>
         </div>
 
-        {/* Projects list */}
+        {/* Project rows */}
         <div className="space-y-px">
-          {projects.map((project, i) => (
+          {projects.map((p, i) => (
             <motion.article
-              key={project.number}
-              initial={{ opacity: 0, y: 40 }}
+              key={p.number}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              onMouseEnter={() => setActiveProject(i)}
-              onMouseLeave={() => setActiveProject(null)}
-              className={`
-                group relative rounded-2xl overflow-hidden border border-border
-                bg-gradient-to-br ${project.bg}
-                transition-all duration-500 cursor-pointer
-                ${activeProject === i ? 'border-opacity-60 scale-[1.01]' : ''}
-              `}
-              style={{
-                borderColor: activeProject === i ? `${project.accent}40` : undefined,
-              }}
+              transition={{ duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              onMouseEnter={() => setActive(i)}
+              onMouseLeave={() => setActive(null)}
+              className="group relative rounded-xl border border-[#1a1a1a] overflow-hidden transition-all duration-500"
+              style={{ backgroundColor: active === i ? p.highlight : 'transparent' }}
             >
-              <div className="p-8 md:p-10 grid md:grid-cols-[auto_1fr_auto] gap-6 md:gap-10 items-start">
+              <div className="p-7 md:p-9 grid md:grid-cols-[64px_1fr_auto] gap-6 items-start">
                 {/* Number */}
                 <span
-                  className="text-5xl md:text-6xl font-display font-bold leading-none transition-colors duration-300"
-                  style={{ color: activeProject === i ? project.accent : '#333' }}
+                  className="text-4xl font-display font-light transition-colors duration-300 leading-none mt-1"
+                  style={{ color: active === i ? p.accent : '#2a2a2a' }}
                 >
-                  {project.number}
+                  {p.number}
                 </span>
 
                 {/* Content */}
                 <div>
-                  <p className="text-xs font-mono tracking-widest uppercase text-fg-3 mb-2">
-                    {project.category}
-                  </p>
-                  <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 group-hover:text-white transition-colors">
-                    {project.title}
+                  <p className="text-[11px] tracking-[0.2em] uppercase text-[#555] mb-2">{p.category}</p>
+                  <h3 className="text-xl md:text-2xl font-display font-medium text-white mb-3 group-hover:text-white">
+                    {p.title}
                   </h3>
-                  <p className="text-fg-2 text-sm md:text-base leading-relaxed font-body mb-6 max-w-xl">
-                    {project.description}
-                  </p>
+                  <p className="text-sm text-[#666] leading-relaxed mb-5 max-w-2xl">{p.description}</p>
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
+                    {p.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 rounded-full text-xs font-body border border-border text-fg-3 transition-colors duration-300"
-                        style={{
-                          borderColor: activeProject === i ? `${project.accent}40` : undefined,
-                          color: activeProject === i ? project.accent : undefined,
-                        }}
+                        className="px-3 py-1 rounded-full text-[11px] border border-[#1e1e1e] text-[#555] transition-all duration-300"
+                        style={{ borderColor: active === i ? `${p.accent}30` : undefined, color: active === i ? p.accent : undefined }}
                       >
                         {tag}
                       </span>
@@ -126,52 +111,41 @@ export default function Projects() {
                   </div>
                 </div>
 
-                {/* Right: year + arrow */}
-                <div className="flex flex-col items-end gap-4">
-                  <span className="text-xs font-mono text-fg-3">{project.year}</span>
-                  <motion.span
-                    animate={{
-                      x: activeProject === i ? 4 : 0,
-                      y: activeProject === i ? -4 : 0,
-                    }}
+                {/* Arrow + year */}
+                <div className="flex flex-col items-end gap-3 pt-1">
+                  <span className="text-[11px] font-mono text-[#444]">{p.year}</span>
+                  <motion.div
+                    animate={{ x: active === i ? 3 : 0, y: active === i ? -3 : 0 }}
                     transition={{ duration: 0.2 }}
-                    className="text-2xl"
-                    style={{ color: activeProject === i ? project.accent : '#444' }}
                   >
-                    ↗
-                  </motion.span>
+                    <ArrowUpRight
+                      className="w-5 h-5 transition-colors duration-300"
+                      style={{ color: active === i ? p.accent : '#333' }}
+                    />
+                  </motion.div>
                 </div>
               </div>
 
-              {/* Hover glow */}
+              {/* Border accent on hover */}
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), ${project.accent}08, transparent 60%)`,
-                }}
+                className="absolute inset-x-0 bottom-0 h-px transition-opacity duration-300"
+                style={{ background: p.accent, opacity: active === i ? 0.3 : 0 }}
               />
             </motion.article>
           ))}
         </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-12 text-center"
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ delay: 0.8 }}
+          className="mt-10 text-sm text-[#555] text-center"
         >
-          <p className="text-fg-2 text-sm font-body mb-4">
-            More projects available on request.
-          </p>
-          <a
-            href="mailto:hello@nathanmabasa.com"
-            className="inline-flex items-center gap-2 text-accent font-display font-semibold text-sm hover:gap-4 transition-all duration-300 link-underline"
-          >
-            Get in touch to see more
-            <span>→</span>
+          More projects available on request —{' '}
+          <a href="mailto:hello@nathanmabasa.com" className="text-accent hover:underline">
+            hello@nathanmabasa.com
           </a>
-        </motion.div>
+        </motion.p>
       </div>
     </section>
   )

@@ -2,7 +2,6 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import TextReveal from '@/components/ui/TextReveal'
 
 const stats = [
   { value: '5+', label: 'Years of Experience' },
@@ -11,129 +10,106 @@ const stats = [
   { value: '3', label: 'Continents Reached' },
 ]
 
-const fadeUp = (delay = 0) => ({
-  hidden: { y: 40, opacity: 0 },
-  show: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] },
-  },
-})
-
 export default function About() {
   const ref = useRef<HTMLElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-100px' })
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
+  const fadeUp = (delay = 0) => ({
+    hidden: { opacity: 0, y: 28 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] } },
+  })
 
   return (
-    <section id="about" ref={ref} className="section relative overflow-hidden">
-      {/* Background orb */}
-      <div className="orb w-[600px] h-[600px] bg-accent/5 -top-32 -right-64 animate-pulse-glow" />
+    <section id="about" ref={ref} className="section relative bg-[#0a0a0a]">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="section-label">01 — About</div>
 
-      <div className="max-w-[1400px] mx-auto relative z-10">
-        {/* Label */}
-        <div className="section-label">
-          <span>01 — About</span>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Left: Text */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 items-start">
+          {/* Left */}
           <div>
-            <TextReveal delay={0.1}>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-[1.05] mb-8">
-                The Person Behind the Screen
-              </h2>
-            </TextReveal>
-
-            <motion.p
-              variants={fadeUp(0.3)}
+            <motion.h2
+              variants={fadeUp(0.1)}
               initial="hidden"
               animate={isInView ? 'show' : 'hidden'}
-              className="text-fg-2 text-lg leading-relaxed mb-8 font-body"
+              className="text-4xl md:text-5xl font-display font-light leading-[1.1] tracking-[-0.02em] text-white mb-8"
             >
-              I&apos;m Nathan Mabasa — a South African digital designer and creative developer who
-              believes that the best work happens at the intersection of strategy, aesthetics,
+              The person behind
+              <br />
+              <span className="italic text-[#888]">the screen.</span>
+            </motion.h2>
+
+            <motion.p
+              variants={fadeUp(0.25)}
+              initial="hidden"
+              animate={isInView ? 'show' : 'hidden'}
+              className="text-[#888] text-base leading-relaxed mb-6"
+            >
+              I&apos;m Nathan Mabasa — a South African digital designer and creative developer
+              who believes that the best work happens at the intersection of strategy, aesthetics,
               and technology.
             </motion.p>
 
-            {/* Quote */}
             <motion.blockquote
-              variants={fadeUp(0.4)}
+              variants={fadeUp(0.35)}
               initial="hidden"
               animate={isInView ? 'show' : 'hidden'}
-              className="relative pl-6 border-l-2 border-accent mb-8"
+              className="border-l-2 border-accent pl-5 mb-6"
             >
-              <p className="text-xl md:text-2xl font-display font-semibold text-white leading-snug italic">
+              <p className="text-lg font-display font-light italic text-white leading-snug">
                 &ldquo;Great design isn&apos;t just visual — it&apos;s a system of decisions.&rdquo;
               </p>
             </motion.blockquote>
 
             <motion.p
-              variants={fadeUp(0.5)}
+              variants={fadeUp(0.45)}
               initial="hidden"
               animate={isInView ? 'show' : 'hidden'}
-              className="text-fg-2 text-base leading-relaxed mb-8 font-body"
+              className="text-[#666] text-sm leading-relaxed mb-8"
             >
-              I specialise in brand identity, UI/UX design, motion and interaction design,
-              creative development, and design systems. I work with founders, studios, and
-              brands across the globe to turn complex challenges into clear, beautiful,
-              and functional digital experiences.
+              I specialise in brand identity, UI/UX, motion design, creative development,
+              and design systems. I work with founders, studios, and global brands to turn
+              complex challenges into beautiful, functional digital experiences.
             </motion.p>
 
             <motion.p
-              variants={fadeUp(0.6)}
+              variants={fadeUp(0.55)}
               initial="hidden"
               animate={isInView ? 'show' : 'hidden'}
-              className="text-fg-2 text-base leading-relaxed font-body"
+              className="text-[#555] text-sm"
             >
-              Based in South Africa — open to international projects, collaborations,
-              and full-time opportunities.
+              Based in South Africa · Open to international projects &amp; collaborations
             </motion.p>
           </div>
 
-          {/* Right: Stats + visual */}
-          <div>
-            {/* Stats grid */}
-            <motion.div
-              variants={fadeUp(0.2)}
-              initial="hidden"
-              animate={isInView ? 'show' : 'hidden'}
-              className="grid grid-cols-2 gap-px bg-border rounded-2xl overflow-hidden mb-8"
-            >
-              {stats.map((stat, i) => (
+          {/* Right */}
+          <div className="space-y-6">
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-px bg-[#1a1a1a] rounded-xl overflow-hidden">
+              {stats.map((s, i) => (
                 <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  key={s.label}
+                  initial={{ opacity: 0, scale: 0.95 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.6, delay: 0.3 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                  className="bg-surface p-8 flex flex-col"
+                  transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }}
+                  className="bg-[#0a0a0a] p-8"
                 >
-                  <span className="text-5xl font-display font-bold text-accent mb-2 tabular-nums">
-                    {stat.value}
-                  </span>
-                  <span className="text-sm text-fg-2 font-body">{stat.label}</span>
+                  <div className="text-4xl font-display font-light text-accent mb-1.5">{s.value}</div>
+                  <div className="text-xs text-[#666] tracking-wide">{s.label}</div>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
 
-            {/* Expertise tags */}
+            {/* Expertise */}
             <motion.div
-              variants={fadeUp(0.6)}
-              initial="hidden"
-              animate={isInView ? 'show' : 'hidden'}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.6 }}
               className="flex flex-wrap gap-2"
             >
-              {[
-                'Brand Identity',
-                'UI / UX Design',
-                'Motion Design',
-                'Design Systems',
-                'Creative Dev',
-                'Digital Strategy',
-                'Web Development',
-              ].map((tag) => (
+              {['Brand Identity', 'UI / UX', 'Motion Design', 'Design Systems', 'Creative Dev', 'Web Development', 'Digital Strategy'].map((tag) => (
                 <span
                   key={tag}
-                  className="px-4 py-2 rounded-full border border-border text-sm text-fg-2 font-body hover:border-accent hover:text-accent transition-all duration-300"
+                  className="px-3.5 py-1.5 rounded-full border border-[#222] text-xs text-[#666] hover:border-accent/40 hover:text-[#aaa] transition-all duration-300"
                 >
                   {tag}
                 </span>
