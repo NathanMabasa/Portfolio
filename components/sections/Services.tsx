@@ -45,17 +45,17 @@ export default function Services() {
       { yPercent: 105, opacity: 0 },
       {
         yPercent: 0, opacity: 1,
-        stagger: 0.08, duration: 0.9, ease: 'power4.out',
+        stagger: 0.07, duration: 0.85, ease: 'power4.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
       }
     )
 
     const cards = sectionRef.current.querySelectorAll<HTMLElement>('.service-card')
     gsap.fromTo(cards,
-      { opacity: 0, y: 40 },
+      { opacity: 0, y: 30 },
       {
         opacity: 1, y: 0,
-        stagger: 0.1, duration: 0.8, ease: 'expo.out',
+        stagger: 0.08, duration: 0.8, ease: 'expo.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
       }
     )
@@ -66,50 +66,48 @@ export default function Services() {
       <div className="max-w-[1400px] mx-auto">
         <div className="section-label">03 — Services</div>
 
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
           <div className="overflow-hidden">
-            <h2 className="reveal-inner font-display font-black text-white tracking-[-0.04em] leading-[0.92]"
-              style={{ fontSize: 'clamp(3rem, 7vw, 6rem)' }}>
-              What I bring
-              <br />
-              <span className="text-accent">to the table.</span>
+            <h2
+              className="reveal-inner font-display font-black text-white leading-[0.92]"
+              style={{ fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', letterSpacing: '-0.03em' }}
+            >
+              What I bring<br />to the table.
             </h2>
           </div>
           <div className="overflow-hidden">
-            <p className="reveal-inner text-sm text-[#555] max-w-xs leading-relaxed">
+            <p className="reveal-inner text-[13px] text-[#555] max-w-xs leading-relaxed">
               Full-spectrum design and development for founders, studios, and ambitious brands.
             </p>
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-px bg-[#1a1a1a]">
+        <div className="grid sm:grid-cols-2 gap-px bg-white/[0.04]">
           {SERVICES.map((s) => (
             <div
               key={s.n}
-              className="service-card opacity-0 bg-[#0d0d0d] p-10 group hover:bg-[#111] transition-all duration-400 relative overflow-hidden"
+              className="service-card opacity-0 bg-[#0d0d0d] p-9 group hover:bg-[#0f0f0f] transition-colors duration-400 relative overflow-hidden"
             >
-              {/* Lime accent line on hover */}
-              <div className="absolute top-0 left-0 w-0 h-0.5 bg-accent group-hover:w-full transition-all duration-500" />
+              {/* Top line — white on hover */}
+              <div className="absolute top-0 left-0 w-0 h-px bg-white/30 group-hover:w-full transition-all duration-500" />
 
               <div className="flex items-start justify-between mb-8">
-                <span className="text-[11px] font-mono text-[#333] group-hover:text-accent transition-colors duration-300">
-                  {s.n}
-                </span>
-                <span className="text-xl text-[#222] group-hover:text-accent group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300">
-                  ↗
-                </span>
+                <span className="text-[10px] font-mono text-[#2a2a2a] group-hover:text-[#555] transition-colors duration-300">{s.n}</span>
+                <span className="text-sm text-[#222] group-hover:text-white/40 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300">↗</span>
               </div>
 
-              <h3 className="font-display font-bold text-white mb-4 group-hover:text-accent transition-colors duration-300"
-                style={{ fontSize: 'clamp(1.4rem, 2.5vw, 2rem)', letterSpacing: '-0.02em' }}>
+              <h3
+                className="font-display font-bold text-white mb-4"
+                style={{ fontSize: 'clamp(1.1rem, 2vw, 1.5rem)', letterSpacing: '-0.02em' }}
+              >
                 {s.title}
               </h3>
 
-              <p className="text-sm text-[#555] leading-relaxed mb-6">{s.desc}</p>
+              <p className="text-[13px] text-[#555] leading-relaxed mb-6">{s.desc}</p>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1.5">
                 {s.tags.map((tag) => (
-                  <span key={tag} className="text-[10px] font-mono text-[#333] border border-[#1a1a1a] px-2 py-0.5 group-hover:border-accent/20 group-hover:text-[#555] transition-all duration-300">
+                  <span key={tag} className="text-[9px] font-mono text-[#2a2a2a] border border-white/[0.05] px-2 py-0.5 group-hover:text-[#444] group-hover:border-white/10 transition-all duration-300">
                     {tag}
                   </span>
                 ))}

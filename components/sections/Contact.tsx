@@ -4,7 +4,6 @@ import { useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-import { ArrowRight } from 'lucide-react'
 import { ContactFormData } from '@/lib/validations'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -30,7 +29,7 @@ export default function Contact() {
       { yPercent: 105, opacity: 0 },
       {
         yPercent: 0, opacity: 1,
-        stagger: 0.08, duration: 0.9, ease: 'power4.out',
+        stagger: 0.07, duration: 0.85, ease: 'power4.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
       }
     )
@@ -64,43 +63,50 @@ export default function Contact() {
     }
   }
 
-  const fieldCls = 'w-full bg-transparent border-b border-[#1a1a1a] py-4 text-sm text-white placeholder-[#333] focus:outline-none focus:border-accent hover:border-[#2a2a2a] transition-colors duration-200'
+  const fieldCls = 'w-full bg-transparent border-b border-white/[0.07] py-4 text-[13px] text-white placeholder-[#2a2a2a] focus:outline-none focus:border-white/20 hover:border-white/12 transition-colors duration-200'
 
   return (
     <section id="contact" ref={sectionRef} className="section bg-[#0d0d0d]">
       <div className="max-w-[1400px] mx-auto">
         <div className="section-label">06 — Contact</div>
 
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-28">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20">
           <div>
-            <div className="overflow-hidden mb-8">
-              <h2 className="reveal-inner font-display font-black text-white tracking-[-0.04em] leading-[0.92]"
-                style={{ fontSize: 'clamp(3rem, 7vw, 6rem)' }}>
-                Let&apos;s work
-                <br />
-                <span className="text-accent">together.</span>
+            <div className="overflow-hidden mb-7">
+              <h2
+                className="reveal-inner font-display font-black text-white leading-[0.92]"
+                style={{ fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', letterSpacing: '-0.03em' }}
+              >
+                Let&apos;s work<br />together.
               </h2>
             </div>
-            <div className="overflow-hidden mb-10">
-              <p className="reveal-inner text-sm text-[#555] leading-relaxed max-w-sm">
-                Have a project in mind? I&apos;m always open to new challenges — brand identities,
+            <div className="overflow-hidden mb-8">
+              <p className="reveal-inner text-[13px] text-[#555] leading-relaxed max-w-sm">
+                Have a project in mind? Open to new challenges — brand identities,
                 website redesigns, or long-term creative partnerships.
               </p>
             </div>
             <div className="overflow-hidden mb-10">
-              <a className="reveal-inner inline-block font-display font-bold text-white hover:text-accent transition-colors duration-300 link-underline"
-                style={{ fontSize: 'clamp(1.2rem, 3vw, 2rem)' }}
-                href="mailto:hello@nathanmabasa.com">
+              <a
+                className="reveal-inner inline-block font-display font-semibold text-white/70 hover:text-white transition-colors duration-300 link-underline"
+                style={{ fontSize: 'clamp(1rem, 2vw, 1.4rem)', letterSpacing: '-0.01em' }}
+                href="mailto:hello@nathanmabasa.com"
+              >
                 hello@nathanmabasa.com
               </a>
             </div>
             <div>
-              <p className="text-[11px] font-mono text-[#333] uppercase tracking-[0.2em] mb-5">Online</p>
+              <p className="text-[10px] font-mono text-[#2a2a2a] uppercase tracking-[0.2em] mb-5">Online</p>
               {SOCIALS.map((s) => (
-                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-between border-b border-[#111] py-3.5 group hover:border-[#222] transition-colors duration-300">
-                  <span className="text-sm text-[#555] group-hover:text-white transition-colors">{s.label}</span>
-                  <span className="text-xs font-mono text-[#333] group-hover:text-accent transition-colors">{s.handle} ↗</span>
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between border-b border-white/[0.05] py-4 group hover:border-white/10 transition-colors duration-300"
+                >
+                  <span className="text-[13px] text-[#555] group-hover:text-white/70 transition-colors">{s.label}</span>
+                  <span className="text-[11px] font-mono text-[#2a2a2a] group-hover:text-[#555] transition-colors">{s.handle} ↗</span>
                 </a>
               ))}
             </div>
@@ -108,37 +114,42 @@ export default function Contact() {
 
           <div>
             {status === 'success' ? (
-              <div className="flex flex-col items-center justify-center h-full text-center py-20 border border-accent/20">
-                <div className="text-3xl text-accent mb-4">✓</div>
-                <h3 className="text-xl font-display font-bold text-white mb-2">Message sent</h3>
-                <p className="text-sm text-[#555] max-w-xs mb-6">Thanks for reaching out. I&apos;ll respond within 1–2 business days.</p>
-                <button onClick={() => setStatus('idle')} className="text-xs text-[#444] hover:text-accent transition-colors">Send another →</button>
+              <div className="flex flex-col items-center justify-center h-full text-center py-20 border border-white/[0.06]">
+                <div className="w-8 h-8 border border-white/20 flex items-center justify-center mb-5">
+                  <span className="text-sm text-white/60">✓</span>
+                </div>
+                <h3 className="text-[15px] font-display font-semibold text-white mb-2">Message sent</h3>
+                <p className="text-[13px] text-[#555] max-w-xs mb-6 leading-relaxed">Thanks for reaching out. I&apos;ll respond within 1–2 business days.</p>
+                <button onClick={() => setStatus('idle')} className="text-[11px] font-mono text-[#3a3a3a] hover:text-white/60 transition-colors">Send another →</button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="space-y-0">
                 <div>
                   <input id="name" name="name" type="text" required autoComplete="name" placeholder="Your name *" className={fieldCls} />
-                  {fieldErrors.name && <p className="pt-1 text-xs text-red-400">{fieldErrors.name[0]}</p>}
+                  {fieldErrors.name && <p className="pt-1 text-[11px] text-red-400/80">{fieldErrors.name[0]}</p>}
                 </div>
                 <div>
                   <input id="email" name="email" type="email" required autoComplete="email" placeholder="Email address *" className={fieldCls} />
-                  {fieldErrors.email && <p className="pt-1 text-xs text-red-400">{fieldErrors.email[0]}</p>}
+                  {fieldErrors.email && <p className="pt-1 text-[11px] text-red-400/80">{fieldErrors.email[0]}</p>}
                 </div>
                 <div>
                   <input id="subject" name="subject" type="text" autoComplete="off" placeholder="Subject" className={fieldCls} />
                 </div>
                 <div>
                   <textarea id="message" name="message" required rows={5} placeholder="Tell me about your project... *" className={`${fieldCls} resize-none`} />
-                  {fieldErrors.message && <p className="pt-1 text-xs text-red-400">{fieldErrors.message[0]}</p>}
+                  {fieldErrors.message && <p className="pt-1 text-[11px] text-red-400/80">{fieldErrors.message[0]}</p>}
                 </div>
-                {status === 'error' && <p className="text-xs text-red-400 pt-2" role="alert">{errorMsg}</p>}
+                {status === 'error' && <p className="text-[11px] text-red-400/80 pt-2" role="alert">{errorMsg}</p>}
                 <div className="pt-8">
-                  <button type="submit" disabled={status === 'loading'}
-                    className="flex items-center gap-3 text-sm font-display font-bold text-black bg-accent px-8 py-4 hover:bg-white disabled:opacity-50 transition-all duration-200">
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="flex items-center gap-3 text-[12px] font-semibold text-black bg-white px-7 py-3.5 hover:bg-white/85 disabled:opacity-40 transition-all duration-200 tracking-wide"
+                  >
                     {status === 'loading' ? (
-                      <><span className="w-4 h-4 border-2 border-black/20 border-t-black rounded-full animate-spin" />Sending...</>
+                      <><span className="w-3.5 h-3.5 border border-black/20 border-t-black rounded-full animate-spin" />Sending...</>
                     ) : (
-                      <>Send Message <ArrowRight className="w-4 h-4" /></>
+                      <>Send Message <span className="text-xs">→</span></>
                     )}
                   </button>
                 </div>
