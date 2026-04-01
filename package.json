@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/react": "^3.0.142",
     "@gsap/react": "^2.1.2",
+    "@vercel/speed-insights": "^2.0.0",
     "ai": "^6.0.140",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.0",

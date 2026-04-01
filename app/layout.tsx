@@ -3,6 +3,7 @@ import { Inter_Tight } from 'next/font/google'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 import GrainOverlay from '@/components/GrainOverlay'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const interTight = Inter_Tight({
   subsets: ['latin'],
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GrainOverlay />
         <CustomCursor />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   )
